@@ -139,7 +139,7 @@ const addDepartment = () => {
                 
             ], function (err, res) {
                 if (err) throw err;
-                viewEmployees()
+                viewDepartments()
                 employeeTracker()
             }
         )
