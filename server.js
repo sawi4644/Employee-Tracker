@@ -1,4 +1,4 @@
-const inquirer= require('inquirer')
+const inquirer = require('inquirer')
 const mysql = require('mysql');
 
 //connect mysql
@@ -51,58 +51,79 @@ const employeeTracker = () => {
 //view all employees
 const viewEmployees = () => {
     console.log('Viewing all employees...')
-    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employees",
-            {
-                
-            }, function (err, res) {
+    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employee",
+        {
+
+        }, function (err, res) {
+            if (err) throw err;
+            console.table(res)
+            employeeTracker()
+        }
+    )
+}
+//view all departments
+const viewDepartments = () => {
+    console.log('Viewing all departments...')
+    var query = connection.query("SELECT name FROM department",
+        {
+
+        }, function (err, res) {
+            if (err) throw err;
+            console.table(res)
+            employeeTracker()
+        }
+    )
+}
+//view roles
+// const viewRoles = () => {
+//     console.log('Viewing all roles...')
+//     var query = connection.query("SELECT name FROM department",
+//             {
+
+//             }, function (err, res) {
+//                 if (err) throw err;
+//                 console.table(res)
+//                 employeeTracker()
+//             }
+//         )
+// }
+
+
+const addEmployee = () => {
+    inquirer.prompt([
+        {
+            name: 'first',
+            type: 'input',
+            message: 'Employees First Name: '
+
+        },
+        {
+            name: 'last',
+            type: 'input',
+            message: 'Employees Last Name:'
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: 'Employees ID:'
+        }
+    ]).then(answer => {
+        var query = connection.query(
+            "INSERT INTO employee(first_name, last_name, role_id)VALUES (?,?,?)",
+            [
+                answer.first,
+                answer.last,
+                answer.id
+            ], function (err, res) {
                 if (err) throw err;
-                console.table(res)
+                viewEmployees()
                 employeeTracker()
             }
         )
+    })
 }
-//view all departments
-// const multiSearch = () => {
-//     console.log('multiSearch')
-//     var query = connection.query(
-//         "SELECT artist, count(*) FROM top5000 GROUP BY artist HAVING COUNT(*) > 1 ORDER BY 2 DESC",
-//         {
 
-//         }, function (err, res) {
-//             if (err) throw err;
-//             console.table(res)
-//             runSearch()
-//         })
-// }
-// const rangeSearch = () => {
-//     inquirer.prompt([
-//         {
-//             name: 'range1',
-//             type: 'input',
-//             message: 'Beginning Number:'
 
-//         },
-//         {
-//             name: 'range2',
-//             type: 'input',
-//             message: 'End Number:'
-//         }
-//     ]).then(answer => {
-//         var query = connection.query(
-//             "SELECT * FROM top5000 WHERE position BETWEEN ? AND ? ",
-//             [
-//                 answer.range1,
-//                 answer.range2
-//             ], function (err, res) {
-//                 if (err) throw err;
-//                 console.table(res)
-//                 runSearch()
-//             }
-//         )
-//     })
-// }
-
-//view roles
 // const songSearch = () => {
 //     inquirer.prompt([
 //         {
@@ -131,7 +152,10 @@ const viewEmployees = () => {
 //update employees role
 
 const exit = () => {
+    console.log("Thanks! Have a nice day!")
     connection.end()
     process.exit()
+
 }
-// app.listen(PORT, () => console.log(`Sever running on http://localhost:${PORT}`));
+
+employeeTracker();
