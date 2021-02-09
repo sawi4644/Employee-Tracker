@@ -106,14 +106,20 @@ const addEmployee = () => {
             name: 'id',
             type: 'input',
             message: 'Employees ID:'
+        },
+        {
+            name: 'man_id',
+            type: 'input',
+            message: 'Manager ID:'
         }
     ]).then(answer => {
         connection.query(
-            "INSERT INTO employee(first_name, last_name, role_id)VALUES (?,?,?)",
+            "INSERT INTO employee(first_name, last_name, role_id, manager_id)VALUES (?,?,?,?)",
             [
                 answer.first,
                 answer.last,
-                answer.id
+                answer.id,
+                answer.man_id,
             ], function (err, res) {
                 if (err) throw err;
                 viewEmployees()
@@ -151,31 +157,31 @@ const addDepartment = () => {
 const addRole = () => {
     inquirer.prompt([
         {
-            name: 'first',
+            name: 'title',
             type: 'input',
-            message: 'Employees First Name: '
+            message: 'Title of New Role: '
 
         },
         {
-            name: 'last',
+            name: 'salary',
             type: 'input',
-            message: 'Employees Last Name:'
+            message: 'Salary for this role:'
         },
         {
-            name: 'id',
+            name: 'depart_id',
             type: 'input',
-            message: 'Employees ID:'
+            message: 'New Department ID:'
         }
     ]).then(answer => {
         connection.query(
-            "INSERT INTO employee(first_name, last_name, role_id)VALUES (?,?,?)",
+            "INSERT INTO role(title, salary, department_id) VALUES (?, ?, ?);",
             [
-                answer.first,
-                answer.last,
-                answer.id
+                answer.title,
+                answer.salary,
+                answer.depart_id,
             ], function (err, res) {
                 if (err) throw err;
-                viewEmployees()
+                viewRoles()
                 employeeTracker()
             }
         )
