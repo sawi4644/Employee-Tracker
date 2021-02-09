@@ -231,33 +231,79 @@ const updateRole = () => {
 
 
 //remove employee
-// const removeEmployee = () => {
-//     inquirer.prompt([
-//         {
-//             name: 'delete',
-//             type: 'input',
-//             message: 'Last Name of employee to remove: '
+const removeEmployee = () => {
+    inquirer.prompt([
+        {
+            name: 'delete',
+            type: 'input',
+            message: 'Last Name of employee to remove: '
 
-//         },
+        },
         
-//     ]).then(answer => {
-//         console.log('Removing Employee...')
-//             var query = connection.query("DELETE FROM employee WHERE id=?);",
-//             [
-//                 answer.delete,
+    ]).then(answer => {
+        console.log('Removing Employee...')
+            var query = connection.query("DELETE FROM employee WHERE last_name= ?;",
+            [
+                answer.delete,
                 
-//             ], function (err, res) {
-//                 if (err) throw err;
-//                 viewRoles();
-//                 employeeTracker()
-//             }
-//         )
-//     })
-// }
+            ], function (err, res) {
+                if (err) throw err;
+                viewEmployees();
+                employeeTracker()
+            }
+        )
+    })
+}
 
        
 //remove department
+const removeDepartment = () => {
+    inquirer.prompt([
+        {
+            name: 'removeDep',
+            type: 'input',
+            message: 'Name of department you want to remove: '
+
+        },
+        
+    ]).then(answer => {
+        console.log('Removing Department...')
+            var query = connection.query("DELETE FROM department WHERE name= ?;",
+            [
+                answer.removeDep,
+                
+            ], function (err, res) {
+                if (err) throw err;
+                viewDepartment();
+                employeeTracker()
+            }
+        )
+    })
+}
 //remove role
+const removeRole = () => {
+    inquirer.prompt([
+        {
+            name: 'roleRem',
+            type: 'input',
+            message: 'Title of role you want to remove: '
+
+        },
+        
+    ]).then(answer => {
+        console.log('Removing Role...')
+            var query = connection.query("DELETE FROM role WHERE title= ?;",
+            [
+                answer.roleRem,
+                
+            ], function (err, res) {
+                if (err) throw err;
+                viewRoles();
+                employeeTracker()
+            }
+        )
+    })
+}
 
 const exit = () => {
     console.log("Thanks! Have a nice day!")
