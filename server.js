@@ -75,20 +75,20 @@ const viewDepartments = () => {
     )
 }
 //view roles
-// const viewRoles = () => {
-//     console.log('Viewing all roles...')
-//     var query = connection.query("SELECT name FROM department",
-//             {
+const viewRoles = () => {
+    console.log('Viewing all roles...')
+    var query = connection.query("SELECT title, salary, department_id FROM role",
+            {
 
-//             }, function (err, res) {
-//                 if (err) throw err;
-//                 console.table(res)
-//                 employeeTracker()
-//             }
-//         )
-// }
+            }, function (err, res) {
+                if (err) throw err;
+                console.table(res)
+                employeeTracker()
+            }
+        )
+}
 
-
+// add emplyee
 const addEmployee = () => {
     inquirer.prompt([
         {
@@ -108,7 +108,7 @@ const addEmployee = () => {
             message: 'Employees ID:'
         }
     ]).then(answer => {
-        var query = connection.query(
+        connection.query(
             "INSERT INTO employee(first_name, last_name, role_id)VALUES (?,?,?)",
             [
                 answer.first,
@@ -122,33 +122,13 @@ const addEmployee = () => {
         )
     })
 }
-
-
-// const songSearch = () => {
-//     inquirer.prompt([
-//         {
-//             name: 'song',
-//             type: 'input',
-//             message: 'Song name:'
-//         },
-//     ]).then(answer => {
-//         console.log(answer)
-//         console.log('Searching for artist...')
-//         var query = connection.query(
-//             "SELECT * FROM top5000 WHERE ?",
-//             {
-//                 artist: answer.song,
-//             }, function (err, res) {
-//                 if (err) throw err;
-//                 console.table(res)
-//                 runSearch()
-//             }
-//         )
-//     })
-// }
-//add employee
 //add department
+
+
 //add role
+
+
+
 //update employees role
 
 const exit = () => {
