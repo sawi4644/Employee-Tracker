@@ -58,7 +58,7 @@ const employeeTracker = () => {
         }
     })
 }
-//ARTIST SEARCH
+//view all employees
 // const artistSearch = () => {
 //     inquirer.prompt([
 //         {
@@ -81,7 +81,7 @@ const employeeTracker = () => {
 //         )
 //     })
 // }
-//MULTI SEARCH
+//view all departments
 // const multiSearch = () => {
 //     console.log('multiSearch')
 //     var query = connection.query(
@@ -122,7 +122,7 @@ const employeeTracker = () => {
 //     })
 // }
 
-//SONG SEARCH
+//view roles
 // const songSearch = () => {
 //     inquirer.prompt([
 //         {
@@ -145,6 +145,10 @@ const employeeTracker = () => {
 //         )
 //     })
 // }
+//add employee
+//add department
+//add role
+//update employees role
 
 const exit = () => {
     connection.end()
