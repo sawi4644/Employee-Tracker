@@ -123,9 +123,64 @@ const addEmployee = () => {
     })
 }
 //add department
+const addDepartment = () => {
+    inquirer.prompt([
+        {
+            name: 'department',
+            type: 'input',
+            message: 'New Department Name:  '
+
+        }
+       ]).then(answer => {
+        connection.query(
+            "INSERT INTO department(name)VALUES (?)",
+            [
+                answer.department,
+                
+            ], function (err, res) {
+                if (err) throw err;
+                viewEmployees()
+                employeeTracker()
+            }
+        )
+    })
+}
 
 
 //add role
+const addRole = () => {
+    inquirer.prompt([
+        {
+            name: 'first',
+            type: 'input',
+            message: 'Employees First Name: '
+
+        },
+        {
+            name: 'last',
+            type: 'input',
+            message: 'Employees Last Name:'
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: 'Employees ID:'
+        }
+    ]).then(answer => {
+        connection.query(
+            "INSERT INTO employee(first_name, last_name, role_id)VALUES (?,?,?)",
+            [
+                answer.first,
+                answer.last,
+                answer.id
+            ], function (err, res) {
+                if (err) throw err;
+                viewEmployees()
+                employeeTracker()
+            }
+        )
+    })
+}
 
 
 
