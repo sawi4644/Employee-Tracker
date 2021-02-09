@@ -14,7 +14,7 @@ connection.connect(error => {
     if (error) throw error
     console.log(`MySQL connected on ${connection.threadId}`)
 });
-const str = 'View all employees, View all departments, View all roles , Add new employee, Add new department, Add new role, Update employees role, Exit';
+const str = 'View all employees, View all departments, View all roles , Add new employee, Add new department, Add new role, Update employees role, Remove Employee, Remove Role, Remove Department, Exit';
 
 const wwyd = str.split(",")
 
@@ -43,6 +43,12 @@ const employeeTracker = () => {
             addRole()
         } else if (answer.action === wwyd[6]) {
             updateRole()
+        } else if (answer.action === wwyd[7]) {
+            removeEmployee()
+        } else if (answer.action === wwyd[8]) {
+            removeDepartment()
+        } else if (answer.action === wwyd[9]) {
+            removeRole()
         } else {
             exit()
         }
@@ -78,14 +84,14 @@ const viewDepartments = () => {
 const viewRoles = () => {
     console.log('Viewing all roles...')
     var query = connection.query("SELECT title, salary, department_id FROM role",
-            {
+        {
 
-            }, function (err, res) {
-                if (err) throw err;
-                console.table(res)
-                employeeTracker()
-            }
-        )
+        }, function (err, res) {
+            if (err) throw err;
+            console.table(res)
+            employeeTracker()
+        }
+    )
 }
 
 // add emplyee
@@ -113,6 +119,7 @@ const addEmployee = () => {
             message: 'Manager ID:'
         }
     ]).then(answer => {
+        console.log('Adding new employee...')
         connection.query(
             "INSERT INTO employee(first_name, last_name, role_id, manager_id)VALUES (?,?,?,?)",
             [
@@ -137,12 +144,13 @@ const addDepartment = () => {
             message: 'New Department Name:  '
 
         }
-       ]).then(answer => {
+    ]).then(answer => {
+        console.log('Adding new department...')
         connection.query(
             "INSERT INTO department(name)VALUES (?)",
             [
                 answer.department,
-                
+
             ], function (err, res) {
                 if (err) throw err;
                 viewDepartments()
@@ -173,6 +181,7 @@ const addRole = () => {
             message: 'New Department ID:'
         }
     ]).then(answer => {
+        console.log('Adding new role...')
         connection.query(
             "INSERT INTO role(title, salary, department_id) VALUES (?, ?, ?);",
             [
@@ -188,9 +197,23 @@ const addRole = () => {
     })
 }
 
-
-
 //update employees role
+
+//remove employee
+const removeEmployee = () => {
+    console.log('Choose an employee to remove...')
+    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employee",
+        {
+
+        }, function (err, res) {
+            if (err) throw err;
+            console.table(res)
+            employeeTracker()
+        }
+    )
+}
+//remove department
+//remove role
 
 const exit = () => {
     console.log("Thanks! Have a nice day!")
