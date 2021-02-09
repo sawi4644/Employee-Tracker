@@ -1,19 +1,9 @@
-const express = require('express');
-const exphbs = require('express-handlebars')
+const inquirer= require('inquirer')
 const mysql = require('mysql');
-
-const app = express();
-const PORT = 3000
-
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 //connect mysql
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'hahahaha',
@@ -59,28 +49,18 @@ const employeeTracker = () => {
     })
 }
 //view all employees
-// const artistSearch = () => {
-//     inquirer.prompt([
-//         {
-//             name: 'artist',
-//             type: 'input',
-//             message: 'Artist name:'
-//         }
-//     ]).then(answer => {
-//         console.log(answer)
-//         console.log('Searching for artist...')
-//         var query = connection.query(
-//             "SELECT * FROM top5000 WHERE ?",
-//             {
-//                 artist: answer.artist,
-//             }, function (err, res) {
-//                 if (err) throw err;
-//                 console.table(res)
-//                 runSearch()
-//             }
-//         )
-//     })
-// }
+const viewEmployees = () => {
+    console.log('Viewing all employees...')
+    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employees",
+            {
+                
+            }, function (err, res) {
+                if (err) throw err;
+                console.table(res)
+                employeeTracker()
+            }
+        )
+}
 //view all departments
 // const multiSearch = () => {
 //     console.log('multiSearch')
@@ -93,7 +73,7 @@ const employeeTracker = () => {
 //             console.table(res)
 //             runSearch()
 //         })
-}
+// }
 // const rangeSearch = () => {
 //     inquirer.prompt([
 //         {
@@ -154,4 +134,4 @@ const exit = () => {
     connection.end()
     process.exit()
 }
-app.listen(PORT, () => console.log(`Sever running on http://localhost:${PORT}`));
+// app.listen(PORT, () => console.log(`Sever running on http://localhost:${PORT}`));
