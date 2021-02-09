@@ -129,7 +129,7 @@ const addEmployee = () => {
                 answer.man_id,
             ], function (err, res) {
                 if (err) throw err;
-                viewEmployees()
+                viewEmployees();
                 employeeTracker()
             }
         )
@@ -153,7 +153,7 @@ const addDepartment = () => {
 
             ], function (err, res) {
                 if (err) throw err;
-                viewDepartments()
+                viewDepartments();
                 employeeTracker()
             }
         )
@@ -190,7 +190,7 @@ const addRole = () => {
                 answer.depart_id,
             ], function (err, res) {
                 if (err) throw err;
-                viewRoles()
+                viewRoles();
                 employeeTracker()
             }
         )
@@ -198,20 +198,64 @@ const addRole = () => {
 }
 
 //update employees role
+const updateRole = () => {
+    inquirer.prompt([
+        {
+            name: 'newRole',
+            type: 'input',
+            message: 'New Role Id: '
+
+        },
+        {
+            name: 'person',
+            type: 'input',
+            message: 'Who is being promoted: '
+
+        },
+    ]).then(answer => {
+        console.log('Updating Employee Role...')
+        connection.query(
+            "UPDATE employee SET role_id= ? WHERE first_name= ?",
+            [
+                answer.newRole,
+                answer.person,
+                
+            ], function (err, res) {
+                if (err) throw err;
+                viewEmployees();
+                employeeTracker()
+            }
+        )
+    })
+}
+
 
 //remove employee
-const removeEmployee = () => {
-    console.log('Choose an employee to remove...')
-    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employee",
-        {
+// const removeEmployee = () => {
+//     inquirer.prompt([
+//         {
+//             name: 'delete',
+//             type: 'input',
+//             message: 'Last Name of employee to remove: '
 
-        }, function (err, res) {
-            if (err) throw err;
-            console.table(res)
-            employeeTracker()
-        }
-    )
-}
+//         },
+        
+//     ]).then(answer => {
+//         console.log('Removing Employee...')
+//             var query = connection.query("DELETE FROM employee WHERE id=?);",
+//             [
+//                 answer.delete,
+                
+//             ], function (err, res) {
+//                 if (err) throw err;
+//                 viewRoles();
+//                 employeeTracker()
+//             }
+//         )
+//     })
+// }
+
+       
 //remove department
 //remove role
 
