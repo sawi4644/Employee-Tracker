@@ -45,10 +45,10 @@ const employeeTracker = () => {
             updateRole()
         } else if (answer.action === wwyd[7]) {
             removeEmployee()
-        } else if (answer.action === wwyd[8]) {
-            removeDepartment()
-        } else if (answer.action === wwyd[9]) {
-            removeRole()
+        // } else if (answer.action === wwyd[8]) { COMING SOON
+        //     removeDepartment()
+        // } else if (answer.action === wwyd[9]) { COMING SOON
+        //     removeRole()
         } else {
             exit()
         }
@@ -272,53 +272,55 @@ const removeEmployee = () => {
 
        
 //remove department
-const removeDepartment = () => {
-    inquirer.prompt([
-        {
-            name: 'removeDep',
-            type: 'input',
-            message: 'Name of department you want to remove: '
+//COMING SOON..
+// const removeDepartment = () => {
+//     inquirer.prompt([
+//         {
+//             name: 'removeDep',
+//             type: 'input',
+//             message: 'Name of department you want to remove: '
 
-        },
+//         },
         
-    ]).then(answer => {
-        console.log('Removing Department...')
-            var query = connection.query("DELETE FROM department WHERE name= ?;",
-            [
-                answer.removeDep,
+//     ]).then(answer => {
+//         console.log('Removing Department...')
+//             var query = connection.query("DELETE FROM department WHERE name= ?;",
+//             [
+//                 answer.removeDep,
                 
-            ], function (err, res) {
-                if (err) throw err;
-                viewDepartment();
-                employeeTracker()
-            }
-        )
-    })
-}
+//             ], function (err, res) {
+//                 if (err) throw err;
+//                 viewDepartment();
+//                 employeeTracker()
+//             }
+//         )
+//     })
+// }
 //remove role
-const removeRole = () => {
-    inquirer.prompt([
-        {
-            name: 'roleRem',
-            type: 'input',
-            message: 'Title of role you want to remove: '
+// COMING SOON
+// const removeRole = () => {
+//     inquirer.prompt([
+//         {
+//             name: 'roleRem',
+//             type: 'input',
+//             message: 'Title of role you want to remove: '
 
-        },
+//         },
         
-    ]).then(answer => {
-        console.log('Removing Role...')
-            var query = connection.query("DELETE FROM role WHERE title= ?;",
-            [
-                answer.roleRem,
+//     ]).then(answer => {
+//         console.log('Removing Role...')
+//             var query = connection.query("DELETE FROM role WHERE title= ?;",
+//             [
+//                 answer.roleRem,
                 
-            ], function (err, res) {
-                if (err) throw err;
-                viewRoles();
-                employeeTracker()
-            }
-        )
-    })
-}
+//             ], function (err, res) {
+//                 if (err) throw err;
+//                 viewRoles();
+//                 employeeTracker()
+//             }
+//         )
+//     })
+// }
 
 const exit = () => {
     console.log("Thanks! Have a nice day!")
