@@ -15,6 +15,8 @@ npm i mysql inquirer
 ## Usage
 Click below to see a recording of how the application works!
 
+https://drive.google.com/file/d/1niaFWp-q83Gl60X0MpvzZi789svcQspB/view
+
 
 ## TEST
 node server.js
