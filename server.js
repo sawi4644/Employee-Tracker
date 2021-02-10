@@ -57,7 +57,7 @@ const employeeTracker = () => {
 //view all employees
 const viewEmployees = () => {
     console.log('Viewing all employees...')
-    var query = connection.query("SELECT first_name, last_name, role_id,manager_id FROM employee",
+    connection.query("SELECT first_name, last_name, role_id,manager_id FROM employee",
         {
 
         }, function (err, res) {
@@ -199,35 +199,50 @@ const addRole = () => {
 
 //update employees role
 const updateRole = () => {
-    inquirer.prompt([
-        {
-            name: 'newRole',
-            type: 'input',
-            message: 'New Role Id: '
+    console.log('Viewing all roles...')
+    var query = connection.query("SELECT * FROM role",
+         function (err, res) {
+            if (err) throw err;
+            console.table(res)
 
-        },
-        {
-            name: 'person',
-            type: 'input',
-            message: 'Who is being promoted: '
-
-        },
-    ]).then(answer => {
-        console.log('Updating Employee Role...')
-        connection.query(
-            "UPDATE employee SET role_id= ? WHERE first_name= ?",
-            [
-                answer.newRole,
-                answer.person,
-                
-            ], function (err, res) {
-                if (err) throw err;
-                viewEmployees();
-                employeeTracker()
-            }
-        )
-    })
+            inquirer.prompt([
+                {
+                    name: 'newRole',
+                    type: 'list',
+                    message: 'Choose a new role ',
+                    choices: res.map(role=>({
+                        name: role.title,
+                        value: role.id,
+                    }))
+            
+                },
+                {
+                    name: 'person',
+                    type: 'input',
+                    message: 'Who is being promoted: '
+            
+                },
+            ]).then(answer => {
+                console.log('Updating Employee Role...')
+                connection.query(
+                    "UPDATE employee SET role_id= ? WHERE first_name= ?",
+                    [
+                        answer.newRole,
+                        answer.person,
+                        
+                    ], function (err, res) {
+                        if (err) throw err;
+                        viewEmployees();
+                        employeeTracker()
+                    }
+                )
+            })
+        }
+    )
 }
+    
+
+
 
 
 //remove employee
